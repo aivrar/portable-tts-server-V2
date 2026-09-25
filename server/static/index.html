@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portable TTS Server V2</title>
+    <link rel="icon" href="/static/tts.ico" sizes="any">
+    <link rel="stylesheet" href="/static/style.css?v=22">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="/static/tts-icon.png" width="28" height="28" alt="" aria-hidden="true">
+            <h1>TTS Server</h1>
+            <span id="gateway-badge" class="badge badge-gray">Connecting...</span>
+        </div>
+        <nav>
+            <button class="tab-btn active" data-tab="setup">Setup</button>
+            <button class="tab-btn" data-tab="server">Server</button>
+            <button class="tab-btn" data-tab="voices">Voices</button>
+            <button class="tab-btn" data-tab="testing">Testing</button>
+            <button class="tab-btn" data-tab="jobs">Editor</button>
+            <button class="tab-btn" data-tab="log">Log</button>
+        </nav>
+        <button id="shutdown-btn" class="btn btn-danger btn-sm" title="Stop all workers, unload models, and close the app">Shutdown</button>
+    </header>
+
+    <main>
+        <section id="tab-setup" class="tab-content active"></section>
+        <section id="tab-server" class="tab-content"></section>
+        <section id="tab-voices" class="tab-content"></section>
+        <section id="tab-testing" class="tab-content"></section>
+        <section id="tab-jobs" class="tab-content"></section>
+        <section id="tab-log" class="tab-content"></section>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="/static/app.js?v=22"></script>
+    <script src="/static/tab-setup.js?v=22"></script>
+    <script src="/static/tab-server.js?v=22"></script>
+    <script src="/static/tab-voices.js?v=22"></script>
+    <script src="/static/tab-testing.js?v=22"></script>
+    <script src="/static/tab-jobs.js?v=22"></script>
+    <script src="/static/tab-log.js?v=22"></script>
+</body>
+</html>

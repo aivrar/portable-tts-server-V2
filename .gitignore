@@ -1,0 +1,69 @@
+# TTS Server source repository exclusions.
+# Local runtime data is kept on disk for the installed app.
+
+# --- Secrets (NEVER commit) ---
+# Contains the plaintext HuggingFace token (secrets/hf_token), intentionally
+# kept on disk for the running app / testing — excluded from VCS, not deleted.
+secrets/
+hf_token
+
+# --- Runtime / generated output ---
+output/
+projects_output/
+run/
+logs/
+
+# --- Caches and model data ---
+cache/
+voices/
+
+# --- Python bytecode / build ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+/_pytest_audit_tmp*/
+.ruff_cache/
+
+# --- Browser / tooling captures ---
+.playwright-mcp/
+
+# --- Local agent scratch / superseded audit backups ---
+/.claude/
+/claude/
+/codex/
+*_pre_fix_backup*/
+
+# --- WSL disk and packaged Linux bootstrap/runtime images ---
+# The ext4 disk contains private state, including a legacy HF token. The
+# rootfs snapshot is too large for a normal GitHub repository and may contain
+# copied runtime state. Neither belongs in the source repository.
+/wsl/
+/linux/
+*.vhdx
+*.vhd
+
+# --- Stray Windows redirect artifact (a literal file named "nul" gets
+#     created when a POSIX/WSL shell runs `> nul` instead of `> /dev/null`) ---
+nul
+
+# --- Editor / OS noise ---
+*.log
+*.tmp
+.venv/
+venv/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+.DS_Store
+Thumbs.db
+
+# Portable release payloads and native build output (sources stay in Git).
+/runtime/
+/releases/
+**/bin/
+**/obj/
+/TTSServer.exe
+/webview.dll

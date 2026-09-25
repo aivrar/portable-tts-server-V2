@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "repository": "aivrar/portable-tts-server-V2",
+  "architecture": "win-x64",
+  "downloads": {
+    "ubuntu": {
+      "url": "https://cdimage.ubuntu.com/ubuntu-base/releases/noble/release/ubuntu-base-24.04.4-base-amd64.tar.gz",
+      "filename": "ubuntu-base-24.04.4-base-amd64.tar.gz",
+      "sha256": "c1e67ef7b17a6300e136118bd1dc04725009cb376c1aad10abcf8cd453628d58"
+    },
+    "webview2": {
+      "url": "https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/b82d47e8-d146-4563-94d1-3a3176b25c0a/Microsoft.WebView2.FixedVersionRuntime.154.0.4258.37.x64.cab",
+      "filename": "webview2-154.0.4258.37-x64.cab",
+      "sha256": "143da7f7c4939fddd3875ed918e44022d7eb87063bf912fe3e32df37c6b0b8c3"
+    },
+    "python": {
+      "url": "https://www.python.org/ftp/python/3.13.12/python-3.13.12-embed-amd64.zip",
+      "filename": "python-3.13.12-embed-amd64.zip",
+      "sha256": "76f238f606250c87c6beac75dccd35ee99070a13490555936abb6cb64ecce3d0"
+    }
+  },
+  "kokoro": {
+    "package": "0.9.4",
+    "misaki": "0.9.4",
+    "repository": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "spacy_model": "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"
+  },
+  "webview2_sdk": "1.0.4191.47",
+  "dotnet_target": "net8.0-windows",
+  "source_package_url": "https://archive.ubuntu.com/ubuntu/pool/"
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Use TTS Server"
+  short_description: "Generate, recover, and subtitle speech via API"
+  default_prompt: "Use $use-tts-server to select an engine and generate timed speech through the local API."

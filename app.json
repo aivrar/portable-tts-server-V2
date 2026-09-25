@@ -1,0 +1,13 @@
+{
+  "name": "Portable TTS Server V2",
+  "version": "2.0.0",
+  "distro": "auto-per-folder",
+  "deps": "python, base, git",
+  "setup": "bash server/setup.sh",
+  "start": "/opt/tts_server/venv/bin/python3 /opt/tts_server/server/tts_api_server.py --host 0.0.0.0 --port 8300",
+  "port": 8300,
+  "width": 1440,
+  "height": 900,
+  "terminal": true,
+  "icon": "assets/tts.ico"
+}
