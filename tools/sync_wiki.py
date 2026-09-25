@@ -81,9 +81,9 @@ def home():
 
 **A portable speech studio for Windows, powered by its own WSL2 Linux distro.** Generate speech, manage engines and voices, create subtitles, and edit audio in a desktop window. A Windows CLI and authenticated HTTP API are included.
 
-![Portable TTS Server V2 with a real Kokoro narration in the Editor]({RAW}/images/github-hero.png)
-
 **[Download the portable release]({REPO}/releases/latest)** · **{link('Follow the illustrated quickstart', 'Quickstart')}** · **{link('Browse the complete manual', 'Manual-Index')}**
+
+![Portable TTS Server V2 with a real Kokoro narration in the Editor]({RAW}/images/github-hero.png)
 
 ## Get running
 
