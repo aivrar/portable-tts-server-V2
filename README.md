@@ -4,7 +4,7 @@
 
 **A portable speech studio for Windows, powered by its own WSL2 Linux distro.** Generate speech, manage engines and voices, create subtitles, and edit audio in a desktop window. The same features are available through a Windows CLI and authenticated HTTP API.
 
-[Illustrated quickstart](manual/quickstart.md) · [User manual](manual/README.md) · [Portable releases](https://github.com/aivrar/portable-tts-server-V2/releases)
+[GitHub wiki](https://github.com/aivrar/portable-tts-server-V2/wiki) · [Illustrated quickstart](manual/quickstart.md) · [Local manual](manual/README.md) · [Portable releases](https://github.com/aivrar/portable-tts-server-V2/releases)
 
 ## Download and run
 

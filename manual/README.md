@@ -4,6 +4,8 @@ This is the user manual for **Portable TTS Server V2**, a **linux distro for win
 
 A GitHub source checkout has no runtime image. Download the complete release or follow the [build instructions](../release/BUILD.md).
 
+You can also read the [online GitHub wiki](https://github.com/aivrar/portable-tts-server-V2/wiki), with the same illustrated guides and a navigation sidebar.
+
 Read this manual when you want to install engines, speak text, clone a voice, generate SRT, edit audio, or drive the same surfaces from `tts.cmd` or the authenticated HTTP API.
 
 **Start here:** the [illustrated quickstart](quickstart.md) follows a real Kokoro narration from installation to a saved edit.
