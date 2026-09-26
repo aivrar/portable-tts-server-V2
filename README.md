@@ -4,17 +4,25 @@
 
 **A portable speech studio for Windows, powered by its own WSL2 Linux distro.** Generate speech, manage engines and voices, create subtitles, and edit audio in a desktop window. The same features are available through a Windows CLI and authenticated HTTP API.
 
+This TTS distro originated as a child of **[Portable Linux in a Box](https://github.com/aivrar/portable-linux-in-a-box)**, also by aivrar. That project is the source of its portable Linux app foundation. The public V2 runtime is rebuilt from a clean Ubuntu base with the TTS dependencies bundled.
+
 [GitHub wiki](https://github.com/aivrar/portable-tts-server-V2/wiki) · [Illustrated quickstart](manual/quickstart.md) · [Local manual](manual/README.md) · [Portable releases](https://github.com/aivrar/portable-tts-server-V2/releases)
+
+## Engines and capabilities
+
+**19 speech engines plus Whisper:** Kokoro, XTTS v2, F5-TTS, Chatterbox, Fish Speech, Bark, Dia, Higgs Audio, Qwen Omni, VibeVoice, SpeechT5, Parler-TTS, OuteTTS, VITS, Edge TTS, Voxtral, VoxCPM2, Sesame CSM, and Orpheus; Whisper provides transcription and subtitle alignment.
+
+Use built-in voices, reference-based voice cloning where supported, multilingual speech, SRT captions, saved projects, waveform editing, and audio effects. The [engine catalog](manual/engines-catalog.md) explains each engine's features and requirements. Kokoro ships installed for offline use; the other engines install when selected. Availability in the catalog does not mean every engine has been inference-tested in this release.
 
 ## Download and run
 
 1. Enable current **WSL2** on Windows 10/11 x64. Run `wsl --status` to check it. If needed, install WSL with `wsl --install --no-distribution` in an administrator terminal and restart when requested. Existing older installations may need `wsl --update` for in-place VHD registration.
-2. Download **all ZIP parts**, `portable-manifest.json`, and both `Extract-Portable-TTS` files from the release into one folder. Double-click `Extract-Portable-TTS.cmd`. It verifies SHA256 checksums, joins the parts, and extracts the app.
-3. Put the extracted **Portable-TTS-Server-V2** folder on a local drive with enough free space. Spaces in the path are supported. Network shares are not.
-4. Double-click **Start-TTSServer.cmd**. First launch imports the included Linux image into `wsl/ext4.vhdx`; later starts reuse that disk.
+2. Download **[Download-TTSServer.exe](https://github.com/aivrar/portable-tts-server-V2/releases/latest/download/Download-TTSServer.exe)** and open it. Choose a writable local folder with at least **35 GiB free**. It downloads the complete release, checks SHA256 hashes, extracts the app, and launches it. The download is about 6.3 GiB; allow time for downloading and first setup.
+3. Your app is in **Portable-TTS-Server-V2** inside the chosen folder. Keep this entire folder together. Spaces in paths are supported; network shares are not. Download files stay in `.tts-download`; remove that cache after verifying the app works to reclaim space.
+4. For later starts, double-click **TTSServer.exe** in the app folder. A progress window explains startup. First launch imports the included Linux image into `wsl/ext4.vhdx`; later starts reuse that disk. `Start-TTSServer.cmd` remains available for terminal use.
 5. In **Server**, select **Kokoro 82M**, choose CPU or an available GPU, and spawn a worker. In **Testing**, choose a built-in voice, enter text, and generate.
 
-Alternatively, download the two extraction helpers and run `Extract-Portable-TTS.cmd -Download` to fetch the manifest and missing parts automatically before verifying/extracting them. The launcher is currently unsigned, so Windows may display an unknown-publisher prompt.
+For a manual/offline transfer, download all ZIP parts, `portable-manifest.json`, and both extraction helpers into one folder, then run `Extract-Portable-TTS.cmd`. Or run `Extract-Portable-TTS.cmd -Download` to fetch missing parts. Existing app folders are never overwritten; select another destination for a fresh copy. The EXEs are unsigned, so Windows may display an unknown-publisher prompt. WSL installation can require administrator approval and a restart; the downloader does not change Windows features.
 
 **Kokoro is included and ready offline.** Its weights, English pronunciation model, Japanese dictionary, and Chinese pronunciation dependencies are bundled. Other engines install from Setup into this portable copy when chosen. Those installations need internet access; gated models require your Hugging Face access. Edge always needs internet. Whisper transcription/subtitle weights are optional downloads.
 
@@ -28,7 +36,7 @@ WSL keeps a registration in the current Windows account. Moving the stopped fold
 
 ## Source and building
 
-The repository contains application source, the native launcher's C# project, icons, tests, and the illustrated manual. Large runtimes and personal data are excluded from Git. **GitHub's automatic “Source code” ZIP is not the runnable portable release.**
+The repository contains application source, the C bootstrap and C# desktop host projects, icons, tests, and the illustrated manual. Large runtimes and personal data are excluded from Git. **GitHub's automatic “Source code” ZIP is not the runnable portable release.**
 
 Maintainers build from a clean Ubuntu image using [the build instructions](release/BUILD.md). The public image is built separately from the private development distro. Runtime downloads and Kokoro weights are pinned in [runtime-sources.json](release/runtime-sources.json); inventories and third-party notices accompany the release.
 

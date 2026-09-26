@@ -2,6 +2,8 @@
 
 Portable TTS Server V2 is a **linux distro for windows users**. Windows provides a native desktop window and CLI; inference and audio processing run inside this app's dedicated WSL2 distro. The complete release includes its own dependencies and Kokoro model data. Optional engines install inside its portable disk when chosen.
 
+Its source project is **[aivrar/portable-linux-in-a-box](https://github.com/aivrar/portable-linux-in-a-box)**. This TTS app originated as a child distro of Portable Linux in a Box. The distributed V2 Linux image is rebuilt from clean Ubuntu with the speech dependencies included.
+
 ## Product identity and paths
 
 | Item | Location or behavior |
@@ -11,11 +13,12 @@ Portable TTS Server V2 is a **linux distro for windows users**. Windows provides
 | Portable Linux disk | `<app>\wsl\ext4.vhdx` |
 | Linux-private state | `/opt/tts_server` in that disk |
 | Clean initial runtime | `<app>\runtime\linux-rootfs.tar.gz` |
-| Native launcher | `<app>\runtime\launcher\TTSServer.exe` |
+| Start application | `<app>\TTSServer.exe` |
+| Desktop host | `<app>\runtime\launcher\TTSServer.exe` |
 | Browser runtime | `<app>\runtime\webview2` |
 | Browser profile | `<app>\cache\webview2` |
 | Windows CLI Python | `<app>\runtime\python\python.exe` |
-| Start / stop | `Start-TTSServer.cmd` / `Stop-TTSServer.cmd` |
+| Start / stop | `TTSServer.exe` (or `Start-TTSServer.cmd`) / `Stop-TTSServer.cmd` |
 | Discovery | `<app>\output\run\registry\tts_server.json` |
 | Default ports | Bridge 9300, gateway 8300; customizable at startup |
 

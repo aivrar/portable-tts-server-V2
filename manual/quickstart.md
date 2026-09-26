@@ -4,7 +4,7 @@ Create your first narration, then save an edited version. These images come from
 
 ## Before you begin
 
-Extract the complete portable release to a writable local folder on Windows with WSL2 enabled. Paths such as `E:\tts_server` are examples. Run **Start-TTSServer.cmd** and wait for **Connected** in the header. A source checkout alone does not contain the distro image; see [identity and requirements](identity-and-requirements.md) and [start and stop](start-stop-and-portability.md).
+Extract the complete portable release to a writable local folder on Windows with WSL2 enabled. Paths such as `E:\tts_server` are examples. Run **TTSServer.exe** and wait for **Connected** in the header. A source checkout alone does not contain the distro image; see [identity and requirements](identity-and-requirements.md) and [start and stop](start-stop-and-portability.md).
 
 ## 1. Check Kokoro
 

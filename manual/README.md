@@ -46,7 +46,7 @@ Developer-oriented files such as `CLI.md`, `API_REFERENCE.md`, `PORTABILITY.md`,
 
 ## First session in one paragraph
 
-Confirm Windows + WSL2, extract the complete release to a local folder, and double-click `Start-TTSServer.cmd`. When the GUI appears, open the **Setup** tab, paste a Hugging Face token if you will install gated models, check that bundled Kokoro is ready, switch to the **Server** tab, spawn a worker, switch to **Testing**, type text, click **Generate**. Finished audio lands under `E:\tts_server\output\jobs\` unless you asked for a named project under `E:\tts_server\projects_output\`.
+Confirm Windows + WSL2, extract the complete release to a local folder, and double-click `TTSServer.exe`. When the GUI appears, open the **Setup** tab, paste a Hugging Face token if you will install gated models, check that bundled Kokoro is ready, switch to the **Server** tab, spawn a worker, switch to **Testing**, type text, click **Generate**. Finished audio lands under `E:\tts_server\output\jobs\` unless you asked for a named project under `E:\tts_server\projects_output\`.
 
 ## Conventions used in this book
 

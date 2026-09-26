@@ -486,3 +486,15 @@ Actual release-image and transfer acceptance:
 - At the destination, a new folder-bound distro imported the transferred image. Headless startup returned only after discovery and custom ports 19300/18300 were ready. An existing job's downloaded WAV matched its original SHA256 exactly, its metadata resolved under the new folder, and a new 5.66-second audio edit was saved there.
 - Fresh destination GPU synthesis on the RTX 3060 produced a nonempty 24 kHz, 5.66-second WAV in 14.37 seconds. The source and transferred copies remain in ignored local build output as verification evidence.
 - The final hero image was visually inspected. PowerShell start/stop/copy/extractor syntax, both manual checks, 10 browser tests, and source secret-pattern/ignore checks passed after the transfer changes.
+
+
+## First-launch and release usability follow-up - 2026-09-25
+
+| ID | Finding | Resolution |
+| --- | --- | --- |
+| F156 | The source-built desktop host lived under runtime/launcher, while the original root EXE had been moved to ignored legacy build output. The release had no obvious root EXE, and initial preparation could be invisible. | Added a statically linked native C TTSServer.exe with the TTS icon, progress window, startup log, and actionable errors. The package explicitly includes this ignored build artifact. Start checks WSL readiness and the required payload. A real native launch from a folder with spaces passed connected app, portable download, and graceful shutdown. Testing caught and corrected the bootstrap's initial command-line quoting error before publication. |
+| F157 | New users had to collect split assets or use a terminal to get the full release. Extraction published directly into the final destination, leaving an unusable folder after interruption. | Added Download-TTSServer.exe with an embedded version-matched extractor and folder picker. It downloads, checks SHA256, extracts into a temporary directory, and launches the root EXE. Explicit archive path checks prevent escape. Existing destinations are preserved. Five fixture checks passed: valid extraction with spaces/apostrophe, existing destination, corrupted part, archive traversal, and missing launcher. |
+
+README/wiki instructions now distinguish the downloader, root app EXE, source-only archive, WSL host setup, cache cleanup, and the Portable Linux in a Box origin. The repository description and search topics name speech engines and capabilities.
+
+The single-session native test also verified the final portable WebView2 download-directory change that was previously compile-only. The previously blocked native duplicate-session scenario was not retried; its runtime coverage limitation remains. No unrelated WSL app was stopped.

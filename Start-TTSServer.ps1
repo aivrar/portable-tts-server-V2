@@ -3,10 +3,13 @@ param(
     [switch]$VerifyOnly,
     [switch]$PrepareOnly,
     [switch]$Headless,
+    [switch]$Smoke,
     [ValidateRange(1024,65535)][int]$BridgePort = 9300,
     [ValidateRange(1024,65535)][int]$GatewayPort = 8300
 )
 $ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = New-Object Text.UTF8Encoding $false
+$OutputEncoding = [Console]::OutputEncoding
 if ($BridgePort -eq $GatewayPort) { throw 'BridgePort and GatewayPort must be different.' }
 $AppRoot = [IO.Path]::GetFullPath($PSScriptRoot).TrimEnd('\')
 if ($AppRoot -notmatch '^[A-Za-z]:\\' -or $AppRoot -match '[\r\n]') {
@@ -21,6 +24,26 @@ if (-not $VerifyOnly -and (Test-Path -LiteralPath (Join-Path $AppRoot 'runtime\t
 }
 if (Test-Path -LiteralPath $TransferPath -PathType Leaf) { $RootfsPath = $TransferPath }
 $LauncherPath = Join-Path $AppRoot 'runtime\launcher\TTSServer.exe'
+if (-not $VerifyOnly) {
+    if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
+        throw 'WSL2 is required. Open the WSL setup guide, install WSL with wsl --install --no-distribution in an Administrator terminal, restart Windows, then open TTSServer.exe again.'
+    }
+    if (-not $Headless -and -not $PrepareOnly) {
+        foreach ($required in @('runtime\launcher\TTSServer.exe', 'runtime\launcher\TTSServer.dll', 'runtime\python\python.exe', 'assets\tts.ico')) {
+            if (-not (Test-Path -LiteralPath (Join-Path $AppRoot $required) -PathType Leaf)) {
+                throw "The portable release is incomplete: $required is missing. Download the complete release with Download-TTSServer.exe."
+            }
+        }
+        if (-not (Get-ChildItem -LiteralPath (Join-Path $AppRoot 'runtime\webview2') -Filter msedgewebview2.exe -Recurse -ErrorAction SilentlyContinue)) {
+            throw 'The bundled browser is missing. Download the complete release with Download-TTSServer.exe.'
+        }
+    }
+    Write-Host 'Checking Windows WSL2 support...'
+    & wsl.exe --status
+    if ($LASTEXITCODE -ne 0) {
+        throw 'WSL2 is not ready. Follow the WSL setup guide, enable virtualization if required, and restart Windows. Then open TTSServer.exe again.'
+    }
+}
 $LxssRoot = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss'
 
 function Normalize-LocalPath([string]$Path) {
@@ -76,6 +99,7 @@ if ($VerifyOnly -or $PrepareOnly) { $result; return }
 
 $LinuxRoot = ((& wsl.exe -d $DistroName --exec wslpath -u $AppRoot) -join '').Trim()
 if ($LASTEXITCODE -ne 0 -or -not $LinuxRoot.StartsWith('/')) { throw 'Could not translate the portable folder for WSL.' }
+Write-Host 'Configuring this portable folder...'
 & wsl.exe -d $DistroName --exec /usr/bin/python3 "$LinuxRoot/tools/configure_runtime.py"
 if ($LASTEXITCODE -ne 0) { throw 'Portable runtime path configuration failed.' }
 
@@ -113,4 +137,7 @@ if ([Environment]::OSVersion.Version.Build -lt 22000) {
     if ($LASTEXITCODE -ne 0) { throw 'Could not grant the bundled browser its required read permissions.' }
 }
 $argsList = @('--root', ('"' + $AppRoot + '"'), '--linux-root', ('"' + $LinuxRoot + '"'), '--distro', $DistroName, '--bridge-port', $BridgePort, '--gateway-port', $GatewayPort)
-Start-Process -FilePath $LauncherPath -ArgumentList $argsList -WorkingDirectory $AppRoot
+if ($Smoke) { $argsList += '--smoke' }
+Write-Host 'Opening the TTS desktop app...'
+$desktop = Start-Process -FilePath $LauncherPath -ArgumentList $argsList -WorkingDirectory $AppRoot -PassThru
+if ($Smoke) { $desktop.WaitForExit(); exit $desktop.ExitCode }

@@ -3,6 +3,10 @@
 Portable TTS Server V2 application code is MIT licensed; see [LICENSE](LICENSE).
 Bundled dependencies retain their own licences and notices.
 
+## Distro origin
+
+This TTS distro originated from the author's **[Portable Linux in a Box](https://github.com/aivrar/portable-linux-in-a-box)** project, the source of its portable Linux application foundation. V2 retains that project lineage while rebuilding its public runtime from a clean Ubuntu base. Portable Linux in a Box is MIT licensed.
+
 | Component | Distribution and notices |
 | --- | --- |
 | Ubuntu 24.04 base and system packages | Copyright files remain under `/usr/share/doc/<package>/copyright` inside the Linux runtime. Exact installed and source package versions are listed in `runtime/licenses/linux-packages.tsv`. Corresponding source packages are available in the [Ubuntu archive](https://archive.ubuntu.com/ubuntu/pool/). |

@@ -20,7 +20,7 @@ def digest(path):
     with path.open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
-for relative in ("runtime/linux-rootfs.tar.gz", "runtime/launcher/TTSServer.exe", "runtime/python/python.exe",
+for relative in ("TTSServer.exe", "runtime/linux-rootfs.tar.gz", "runtime/launcher/TTSServer.exe", "runtime/python/python.exe",
                  "runtime/licenses/linux-packages.tsv", "runtime/licenses/python-packages.json",
                  "runtime/licenses/ubuntu-sources.json"):
     if not (STAGE / relative).is_file():
@@ -33,6 +33,7 @@ if list((STAGE / "runtime").glob("transfer-*")):
     raise SystemExit("Personal transfer state must never be included in a public release")
 sources = set(subprocess.check_output(["git", "-C", str(ROOT), "ls-files", "--cached", "--others", "--exclude-standard", "-z"]).decode().split("\0")) - {""}
 files = [(ROOT / name, name) for name in sorted(sources) if (ROOT / name).is_file()]
+files.append((STAGE / "TTSServer.exe", "TTSServer.exe"))
 files += [(path, path.relative_to(STAGE).as_posix()) for path in sorted((STAGE / "runtime").rglob("*")) if path.is_file()]
 print(f"Packing {len(files)} files. No installed VHD, user output, voices, profiles, or secrets.", flush=True)
 inventory = []
@@ -68,7 +69,8 @@ with archive_path.open("rb") as source:
 (DEST / "file-inventory.json").write_text(json.dumps(inventory, indent=2) + "\n")
 for name in ("Extract-Portable-TTS.ps1", "Extract-Portable-TTS.cmd"):
     shutil.copy2(ROOT / "release" / name, DEST / name)
+shutil.copy2(WORK / "native/Download-TTSServer.exe", DEST / "Download-TTSServer.exe")
 asset_names = [part["name"] for part in manifest["parts"]] + [
-    "portable-manifest.json", "file-inventory.json", "Extract-Portable-TTS.ps1", "Extract-Portable-TTS.cmd"]
+    "portable-manifest.json", "file-inventory.json", "Extract-Portable-TTS.ps1", "Extract-Portable-TTS.cmd", "Download-TTSServer.exe"]
 (DEST / "SHA256SUMS.txt").write_text("".join(f"{digest(DEST / name)}  {name}\n" for name in sorted(asset_names)))
 print("Release assets:", DEST)

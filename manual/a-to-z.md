@@ -346,7 +346,7 @@ Alphabetical full-usage index for TTS Server, the **linux distro for windows use
 
 **SRT** — `POST /api/jobs/{id}/srt`. Files `.srt` + `_timing.json`. words_per_line 1–20 default 3.
 
-**Start-TTSServer.cmd** — Only supported start. Calls `Start-TTSServer.ps1`. `-VerifyOnly` for a dry registration check.
+**TTSServer.exe** — Starts the app with visible setup progress. `Start-TTSServer.cmd` is the terminal alternative; both use `Start-TTSServer.ps1`. Pass `-VerifyOnly` to the script for a dry registration check.
 
 **status (CLI)** — Combined install + workers; `--watch` refreshes.
 

@@ -6,7 +6,8 @@ The complete release runs from a writable folder on a local Windows drive. Manua
 
 | Location | Contents |
 | --- | --- |
-| `runtime/launcher` | Self-contained Windows native launcher |
+| `TTSServer.exe` | Clickable launcher with visible setup progress |
+| `runtime/launcher` | Self-contained Windows desktop host |
 | `runtime/python` | Windows Python for the CLI |
 | `runtime/webview2` | Fixed Version browser runtime |
 | `runtime/linux-rootfs.tar.gz` | Clean Linux image, dependencies, and offline-ready Kokoro |
@@ -21,14 +22,14 @@ Inside the disk, `/opt/tts_server` holds Linux Python, weights, optional engine 
 
 Use Windows x64 with working WSL2 and virtualization. A GPU is optional for Kokoro; GPU inference needs a compatible Windows NVIDIA driver. WSL and drivers are host components. Python, .NET runtime, WebView2, FFmpeg, CUDA user-space libraries, and Kokoro are included.
 
-Allow at least **30 GiB free for extraction/import and working room**, plus space for download parts and the joined ZIP if retained. Additional engines may consume tens of gigabytes. The VHD grows as models and caches are added. Use `tts.cmd disk` for actual sizes.
+Allow at least **35 GiB free for initial downloading, extraction, import, and working room**. Once the app works, remove the downloader's `.tts-download` cache to reclaim the space occupied by parts and the joined ZIP. Additional engines may consume tens of gigabytes. The VHD grows as models and caches are added. Use `tts.cmd disk` for actual sizes.
 
 ## Start, stop, and move
 
-1. Extract the complete release and run `Start-TTSServer.cmd`.
+1. Extract the complete release and run `TTSServer.exe`.
 2. Before moving, copying, or backing up, run `Stop-TTSServer.cmd`. It requests API shutdown and terminates only this folder's verified WSL distro.
 3. If Stop confirms **the disk is released**, copy the whole folder, including `wsl/ext4.vhdx`, to the destination local drive or PC. If it reports a locked disk, use the transfer command below.
-4. Run `Start-TTSServer.cmd` there. Packages and installed engines travel with the disk.
+4. Run `TTSServer.exe` there. Packages and installed engines travel with the disk.
 
 Never copy an active VHD. Keep a complete stopped backup before upgrading. Do not merge a fresh release over a running installation.
 

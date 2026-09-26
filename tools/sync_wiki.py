@@ -81,6 +81,10 @@ def home():
 
 **A portable speech studio for Windows, powered by its own WSL2 Linux distro.** Generate speech, manage engines and voices, create subtitles, and edit audio in a desktop window. A Windows CLI and authenticated HTTP API are included.
 
+**Distro source:** [aivrar/portable-linux-in-a-box](https://github.com/aivrar/portable-linux-in-a-box). This TTS app originated as a child of Portable Linux in a Box; the public V2 runtime is rebuilt from clean Ubuntu with the speech dependencies bundled.
+
+**19 speech engines plus Whisper:** Kokoro, XTTS v2, F5-TTS, Chatterbox, Fish Speech, Bark, Dia, Higgs Audio, Qwen Omni, VibeVoice, SpeechT5, Parler-TTS, OuteTTS, VITS, Edge TTS, Voxtral, VoxCPM2, Sesame CSM, and Orpheus. See the {link('engine catalog', 'Engine-Catalog')} for voice cloning, languages, and hardware requirements.
+
 **[Download the portable release]({REPO}/releases/latest)** · **{link('Follow the illustrated quickstart', 'Quickstart')}** · **{link('Browse the complete manual', 'Manual-Index')}**
 
 ![Portable TTS Server V2 with a real Kokoro narration in the Editor]({RAW}/images/github-hero.png)
@@ -88,9 +92,9 @@ def home():
 ## Get running
 
 1. Use Windows 10/11 x64 with **WSL2** enabled. Python, .NET, WebView2, Linux dependencies, and Kokoro are bundled. A GPU is optional; GPU use needs the Windows NVIDIA driver.
-2. Download both extraction helpers from the [release page]({REPO}/releases/latest), put them in one folder, and run `Extract-Portable-TTS.cmd -Download` from a terminal. It downloads all four parts, verifies their checksums, and extracts the app. You can also download the parts and manifest yourself and double-click the helper.
-3. Choose a writable local drive. Allow at least **30 GiB free**, plus space for retained download parts and archives. GitHub's automatic **Source code** ZIP contains source only.
-4. Double-click **Start-TTSServer.cmd** in the extracted folder. First launch imports the bundled Linux image.
+2. Download **[Download-TTSServer.exe]({REPO}/releases/latest/download/Download-TTSServer.exe)** and open it. Choose a local folder. It downloads the complete release, checks SHA256 hashes, extracts the app, and launches it. The download is about 6.3 GiB.
+3. Allow at least **35 GiB free** for downloads and first setup. After verifying the app works, remove `.tts-download` to reclaim download cache space. GitHub's automatic **Source code** ZIP contains source only.
+4. For later starts, double-click **TTSServer.exe** in the app folder. Startup progress and errors appear in a window. First launch imports the bundled Linux image. WSL installation can require administrator approval and a reboot; the downloader does not enable Windows features.
 5. In **Server**, select **Kokoro 82M**, choose CPU or a GPU, and spawn a worker. In **Testing**, choose a built-in voice, enter text, and generate.
 
 **Kokoro works offline.** Other engines install into this portable copy when selected and need internet for their downloads. Gated models require your Hugging Face access. Edge uses an online service; optional Whisper transcription weights download separately.

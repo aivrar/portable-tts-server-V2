@@ -1,37 +1,42 @@
-# Portable TTS Server V2 — v2.0.0
+# Portable TTS Server V2 - v2.0.1
 
-A portable Windows speech studio with its own WSL2 Linux distro, native desktop window, CLI, and authenticated HTTP API.
+19 speech engines plus Whisper, voice cloning where supported, subtitles, audio editing, a Windows CLI, and an authenticated HTTP API. Kokoro and its offline assets are bundled; other engines install into the portable folder when selected.
+
+**Distro source: [aivrar/portable-linux-in-a-box](https://github.com/aivrar/portable-linux-in-a-box).** This app originated as its child distro. The public V2 Linux runtime is rebuilt from clean Ubuntu with the speech dependencies included.
 
 ## Download and start
 
-1. Download `Extract-Portable-TTS.cmd` and `Extract-Portable-TTS.ps1` into the same folder.
-2. Run `Extract-Portable-TTS.cmd -Download` from a terminal. It downloads the manifest and four archive parts, verifies their SHA256 checksums, and extracts the complete app.
-3. Run `Portable-TTS-Server-V2\Start-TTSServer.cmd`.
-4. In **Server**, spawn a Kokoro worker on CPU or an available GPU; generate from **Testing**.
+1. Download **Download-TTSServer.exe** below and open it.
+2. Choose a writable local folder with **35 GiB free**. The helper downloads about **6.3 GiB**, verifies SHA256 checksums, extracts the app, and launches it. Allow time for the download and first import.
+3. For later starts, open **Portable-TTS-Server-V2/TTSServer.exe**. Startup progress and errors appear in a window with a WSL setup guide button.
+4. In **Server**, spawn a **Kokoro 82M** worker on CPU or an available GPU. In **Testing**, choose a built-in voice and generate speech.
 
-For manual downloading, get all four `.zip.part001`–`.zip.part004` files, `portable-manifest.json`, and both extraction helpers, then double-click the CMD helper. The approximately **6.3 GiB** download is split because GitHub limits individual release assets to under 2 GiB. The automatic **Source code** downloads do not contain the runtime.
+**Host requirements:** Windows 10/11 x64, working WSL2, and virtualization. WSL setup can require administrator approval and a restart. The downloader does not enable Windows features. An NVIDIA GPU is optional and needs its Windows driver. The EXEs are unsigned, so Windows may display an unknown-publisher prompt.
 
-Use Windows x64 with WSL2 and virtualization enabled. Allow at least **30 GiB free** for extraction, first-run import, and working room, plus space for retained archive parts. An NVIDIA GPU is optional; it requires the Windows driver. The launcher is unsigned.
+The app contains Python, .NET, WebView2, Linux dependencies, PyTorch/CUDA user-space libraries, FFmpeg, and Kokoro, including pronunciation assets for its nine language groups. No separate app runtime installation is needed. Other engines need internet to install; gated models require access, Edge uses an online service, and Whisper weights are optional downloads.
 
-## Included
+## What's fixed in 2.0.1
 
-- Offline-ready Kokoro, all built-in voices, English pronunciation model, Japanese dictionary, and Chinese pronunciation dependencies.
-- Fresh Ubuntu 24.04.4 runtime with Linux Python, PyTorch/CUDA user-space libraries, FFmpeg, and audio dependencies.
-- Windows Python, a self-contained .NET desktop launcher, and bundled WebView2 Fixed Version.
-- New TTS icon, illustrated manual with eight real app screenshots, source code, license inventories, and corresponding Ubuntu package sources.
+- A clickable **TTSServer.exe is in the main app folder** again, with the TTS icon and visible first-start progress.
+- **Download-TTSServer.exe** assembles the full portable release automatically. It is a small native Windows program with no separate .NET or VC runtime requirement.
+- Startup checks for missing payload files and WSL readiness before importing the Linux image.
+- Extraction validates checksums and archive paths, publishes only a completed app folder, and refuses to overwrite an existing installation.
+- The README and wiki describe the engines, new download/start flow, and the Portable Linux in a Box lineage.
 
-Other engines install into this copy's Linux disk when chosen. Those installations need internet; gated models require access. Edge uses an online service. Optional Whisper transcription weights are downloaded separately.
+## Manual or offline transfer
+
+Download all four `.zip.part001` through `.zip.part004` files, `portable-manifest.json`, and both `Extract-Portable-TTS` helpers into one folder. Double-click the CMD helper. `Extract-Portable-TTS.cmd -Download` can also fetch missing parts. GitHub's automatic **Source code** downloads do not contain the runtime.
+
+Download cache remains in `.tts-download` beneath your chosen folder. Remove that cache after verifying the app works. Existing app folders are never overwritten; choose another destination for a fresh copy.
 
 ## Moving and preserving your installation
 
-Run `Stop-TTSServer.cmd`. Once it confirms the disk is released, copy the entire folder, including `wsl/ext4.vhdx`. If older WSL keeps the disk locked, run `Copy-TTSServer.ps1 -Destination 'D:\Portable-TTS-Server-V2'`; this exports the app's Linux state without stopping unrelated WSL apps. Keep the original until you verify the destination. See the included `PORTABILITY.md` for snapshot space and cleanup instructions.
+Run **Stop-TTSServer.cmd** before moving or copying the app. Once it confirms the disk is released, copy the entire folder, including `wsl/ext4.vhdx`. If WSL retains the disk handle, use **Copy-TTSServer.ps1** to transfer without stopping unrelated WSL apps. Keep the original until the destination is verified. See [the wiki](https://github.com/aivrar/portable-tts-server-V2/wiki) for commands and instructions.
 
 ## Verification and limits
 
-- 74 Python regression tests, 10 browser logic tests, and manual link/content checks passed.
-- Fresh release-image import passed real CPU synthesis for all nine Kokoro language groups with Python network connections blocked. Real API/CLI speech passed on CPU and an RTX 3060.
-- Transfer to a new folder preserved an existing job's audio byte-for-byte, allowed a new edit, and passed fresh GPU synthesis with correct discovery and paths. An unrelated WSL app stayed running. Incomplete transfers and nested destinations were refused.
-- The bundled native browser displayed the connected app and TTS icon, and shut down successfully on Windows 10 build 19045. Final download-directory and duplicate-close changes are compile-verified and still need a native runtime retest.
-- Optional engines and Windows 11 were not all separately tested. The release bundles app dependencies; Windows, WSL2, virtualization, and GPU drivers remain host requirements.
+The root EXE passed a native launch test from a folder with spaces: bundled WebView2, connected app, TTS icon, portable downloads, and graceful shutdown. Extraction checks passed for valid archives, damaged parts, unsafe paths, missing launchers, and preservation of existing destinations.
 
-The public runtime was built from a fresh official Ubuntu image. Private development disks, personal voices, jobs, tokens, and browser profiles are excluded. Application source is MIT licensed; bundled components retain their own licenses and notices.
+The unchanged clean Linux image previously passed offline CPU synthesis for all nine Kokoro language groups, CPU and RTX 3060 API/CLI generation, and relocation with byte-for-byte preservation of saved audio. The existing regression suites passed 74 Python tests and 10 browser tests. Windows 10 build 19045 was the test host; Windows 11 and inference across all optional engines were not separately tested. The native same-folder duplicate-session scenario remains unverified; the backend duplicate guard was tested separately.
+
+Source is MIT licensed; bundled components retain their own licenses, notices, inventories, and corresponding Ubuntu sources. Private development disks, voices, jobs, credentials, and browser profiles are excluded.

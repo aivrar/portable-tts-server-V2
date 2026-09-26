@@ -1,6 +1,6 @@
 """Build a fresh Windows/WSL portable runtime; never export the working distro.
 
-Windows build host: Git, Python 3.11+, .NET 8 SDK, WSL2, internet, 80+ GiB free.
+Windows build host: Git, Python 3.11+, .NET 8 SDK, MSVC/Windows SDK, WSL2, internet, 80+ GiB free.
 Run from a source checkout: python tools/build_portable.py
 Use --export-only after inspecting and testing an existing clean build.
 """
@@ -107,8 +107,8 @@ def main():
     with zipfile.ZipFile(downloads["python"]) as archive:
         archive.extractall(runtime / "python")
     run("expand.exe", downloads["webview2"], "-F:*", runtime / "webview2")
-    run("dotnet", "publish", ROOT / "launcher/TTSServer.csproj", "-c", "Release", "-r", "win-x64",
-        "--self-contained", "true", "-o", runtime / "launcher")
+    run("powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ROOT / "tools/Build-Launchers.ps1",
+        "-Destination", STAGE)
     native_notices(runtime)
     distro = "TTS-Server-V2-" + hashlib.sha256(str(STAGE).lower().encode()).hexdigest()[:12]
     existing = run("powershell", "-NoProfile", "-Command",

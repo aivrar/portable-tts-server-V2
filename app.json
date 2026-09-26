@@ -1,6 +1,6 @@
 {
   "name": "Portable TTS Server V2",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "distro": "auto-per-folder",
   "deps": "python, base, git",
   "setup": "bash server/setup.sh",

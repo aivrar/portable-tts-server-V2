@@ -5,14 +5,16 @@ This is the operational loop for Portable TTS Server V2, the linux distro for wi
 ## Before first launch
 
 - Use Windows x64 with WSL2 enabled. `wsl --status` should succeed. Restart Windows if enabling WSL requires it.
-- Download every release part and the manifest, then run the extraction helper. It checks each part and the joined archive using SHA256.
+- Open `Download-TTSServer.exe` from the release and select a local destination. It downloads, verifies, extracts, and starts the complete app. For offline transfer, download every release part, the manifest, and both extraction helpers, then run the CMD helper.
 - Choose a writable local folder. `E:\tts_server` is an example; spaces are supported. UNC shares are unsupported.
-- Confirm `runtime/launcher/TTSServer.exe`, `runtime/python/python.exe`, `runtime/webview2`, and `runtime/linux-rootfs.tar.gz` exist.
-- Allow at least 30 GiB free for extraction/import and working room, plus retained download parts/archives.
+- Confirm root-level `TTSServer.exe`, `runtime/launcher/TTSServer.exe`, `runtime/python/python.exe`, `runtime/webview2`, and `runtime/linux-rootfs.tar.gz` exist.
+- Allow at least 35 GiB free for the download cache, extraction, import, and working room. Remove `.tts-download` after verifying the app works to recover the space occupied by parts and the joined ZIP.
 
 ## Starting
 
-Double-click **Start-TTSServer.cmd**, or run from the extracted folder:
+Double-click **TTSServer.exe** in the app folder. A progress window displays first-launch setup and any errors. The WSL setup guide button opens Microsoft's installation instructions. WSL setup can require administrator approval and a reboot. Startup logs are saved in `output/run/startup.log`.
+
+For terminal use, `Start-TTSServer.cmd` is also supported, or run from the extracted folder:
 
 ```powershell
 .\Start-TTSServer.ps1

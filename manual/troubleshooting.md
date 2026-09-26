@@ -1,5 +1,14 @@
 # Troubleshooting
 
+## Download or first launch
+
+- Start with the release's **Download-TTSServer.exe**. It downloads and extracts the complete app. GitHub's Source code ZIP lacks the runtime and runnable EXEs.
+- The app's clickable EXE is **TTSServer.exe** in the main app folder. Keep `runtime`, `server`, and the other files beside it. Startup details are in `output/run/startup.log`; downloader details are in `.tts-download/<version>/download.log` beneath the chosen destination.
+- Missing or disabled WSL needs Windows setup first. Use the launcher's **WSL setup guide**, follow Microsoft's instructions, restart if requested, then open TTSServer.exe again. Python, .NET, and WebView2 are already bundled.
+- A checksum failure identifies the damaged part. Delete only that named part from the download cache and retry; successfully downloaded parts are reused. A failed download leaves a `.download` file that the next attempt replaces.
+- The downloader refuses an existing `Portable-TTS-Server-V2` destination. Select another folder for a fresh installation. Preserve the old complete folder until the replacement is verified; do not merge files over a running app.
+- If extraction is interrupted, retry. The final app folder appears only after extraction succeeds. The error identifies any abandoned `.tts-extract-...` directory; remove that temporary directory after the retry succeeds. Keep at least 35 GiB free for initial download and setup.
+
 Failures in this product are usually identity (wrong distro or path), auth (stale token), resources (VRAM/disk), or engine-specific (missing reference, offline Edge, gated Hub). Work the list in that order.
 
 ## The app will not start

@@ -1,6 +1,6 @@
 # Building a portable release
 
-Build on Windows x64 with Git, Python 3.11+, .NET 8 SDK, working WSL2, internet, and at least 80 GiB free. Release users do not need these build tools.
+Build on Windows x64 with Git, Python 3.11+, .NET 8 SDK, Visual Studio 2022 Build Tools (Desktop development with C++ and a Windows SDK), working WSL2, internet, and at least 80 GiB free. Release users do not need these build tools.
 
 ## Fresh build
 
@@ -29,7 +29,9 @@ python tools/package_portable.py
 
 Export removes temporary build paths, machine identity, logs, and package download caches. It preserves pronunciation data and dependencies. Startup recreates folder-specific paths.
 
-Packaging includes source candidates and `runtime/`, excluding the staging VHD and user state. It splits the archive into 1.75 GiB parts under `releases/v2.0.0`, with a manifest, file inventory, SHA256SUMS, and extraction helpers. Each part is below GitHub's 2 GiB asset limit.
+Packaging includes source candidates, the root `TTSServer.exe`, and `runtime/`, excluding the staging VHD and user state. It splits the archive into 1.75 GiB parts under `releases/v<version>`, with a manifest, file inventory, SHA256SUMS, extraction helpers, and `Download-TTSServer.exe`. Each part is below GitHub's 2 GiB asset limit.
+
+For launcher-only changes against an existing verified clean runtime, run `python tools/build_portable.py --sync-only`, then `powershell -NoProfile -ExecutionPolicy Bypass -File tools/Build-Launchers.ps1`, and package again. The native C bootstrap and downloader use the static C runtime. The downloader embeds the version-matched extraction script. Never mix the downloader, manifest, and parts from different versions.
 
 ## Release acceptance
 
