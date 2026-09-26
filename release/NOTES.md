@@ -37,6 +37,8 @@ Run **Stop-TTSServer.cmd** before moving or copying the app. Once it confirms th
 
 The root EXE passed a native launch test from a folder with spaces: bundled WebView2, connected app, TTS icon, portable downloads, and graceful shutdown. Extraction checks passed for valid archives, damaged parts, unsafe paths, missing launchers, and preservation of existing destinations.
 
+The actual v2.0.1 release parts also passed extraction through the native downloader, first-import startup from a new folder with spaces, and fresh CPU Kokoro generation: a 24 kHz, 5.66-second WAV. All 10 GitHub asset sizes and SHA256 digests matched. Anonymous downloads of the EXE, manifest and helpers matched the built files; all four archive URLs were reachable. Automatic approval review blocked an additional test that would execute the GitHub-downloaded EXE, without a detailed reason. The identical locally built EXEs passed the native tests described above.
+
 The unchanged clean Linux image previously passed offline CPU synthesis for all nine Kokoro language groups, CPU and RTX 3060 API/CLI generation, and relocation with byte-for-byte preservation of saved audio. The existing regression suites passed 74 Python tests and 10 browser tests. Windows 10 build 19045 was the test host; Windows 11 and inference across all optional engines were not separately tested. The native same-folder duplicate-session scenario remains unverified; the backend duplicate guard was tested separately.
 
 Source is MIT licensed; bundled components retain their own licenses, notices, inventories, and corresponding Ubuntu sources. Private development disks, voices, jobs, credentials, and browser profiles are excluded.

@@ -498,3 +498,18 @@ Actual release-image and transfer acceptance:
 README/wiki instructions now distinguish the downloader, root app EXE, source-only archive, WSL host setup, cache cleanup, and the Portable Linux in a Box origin. The repository description and search topics name speech engines and capabilities.
 
 The single-session native test also verified the final portable WebView2 download-directory change that was previously compile-only. The previously blocked native duplicate-session scenario was not retried; its runtime coverage limitation remains. No unrelated WSL app was stopped.
+
+
+Final v2.0.1 package verification:
+
+- The 6,730,641,929-byte archive contains 1,893 files, including the root TTSServer.exe. No installed VHD, private output, profiles, secrets, or personal voices were included. All four part hashes and the joined SHA256 were independently verified: `df62955911bf943e2524f542fc60ecbb967bc75a609f6f38df03c7e1467c5632`.
+- The clean Linux image hash is unchanged from the previously verified release: `bfde7ba541c074266c4ad05109610579f59aa693a3eb217f4e42f1fd21807392`.
+- The actual new downloader extracted the real release parts into a new path containing spaces. That extracted root EXE imported a fresh WSL disk and passed native connected-app, icon, portable-download, and graceful-shutdown checks. Missing-payload startup also failed with clear instructions before creating a WSL disk.
+- GitHub stored all 10 assets with matching sizes and SHA256 digests. Anonymous GETs of the EXE, manifest, and both helpers matched local bytes; anonymous HEAD checks passed for all four archive parts. Automatic approval review blocked the additional test that would execute an EXE downloaded from GitHub, with no detailed reason. That public-download execution test was not retried through another route. Native execution was tested using the identical locally built bytes.
+- Both manual checks passed, and the updated live wiki Home, Quickstart, Requirements, Start/Stop, and Troubleshooting pages matched their generated sources.
+
+| ID | Finding | Resolution |
+| --- | --- | --- |
+| F158 | New downloader cache and temporary extraction directories were not covered by the source checkout's old ignore rules. Choosing the source directory as a download destination could also leave a generated app copy visible to Git. | Added ignores for `.tts-download`, `.tts-extract-*`, the downloaded root helper EXE, and the default generated `Portable-TTS-Server-V2` directory. All four representative ignore checks passed. This is a source repository hygiene update; it does not change the verified release binaries. |
+
+- The actual v2.0.1 first-import copy loaded bundled Kokoro on CPU and generated a 24 kHz, 5.66-second WAV in 7.01 seconds through the bundled Windows CLI. Job `bf359aca-2ca4-4a9a-876a-e92890369c5c`; audio SHA256 `903b856d7b04c5b263667e81f8f10f6e29aa82c1969d4f0ea264ddd26dd66c10`. Shutdown stopped only that verified test distro. The known retained VHD handle on this older WSL host was reported correctly; the documented export transfer remains the supported workaround.

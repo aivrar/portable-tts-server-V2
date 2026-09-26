@@ -67,3 +67,9 @@ Thumbs.db
 **/obj/
 /TTSServer.exe
 /webview.dll
+
+# Downloader caches and a default installation placed inside a source checkout.
+.tts-download/
+.tts-extract-*/
+/Download-TTSServer.exe
+/Portable-TTS-Server-V2/
